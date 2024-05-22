@@ -23,7 +23,7 @@ describe('ConsoleMessagesStore', () => {
   });
 
   it('subscribeToMessageUpdates - subscribes to log updates and calls addMessage when new message is received', async () => {
-    spectator.service.subscribeToMessageUpdates();
+    spectator.service.subscribeToMessageUpdates().subscribe();
 
     expect(spectator.inject(WebSocketService).subscribeToLogs)
       .toHaveBeenCalledWith('filesystem.file_tail_follow:/var/log/messages:500');
@@ -39,13 +39,13 @@ describe('ConsoleMessagesStore', () => {
   });
 
   it('lines$ - returns lines joined with new line from state', async () => {
-    spectator.service.subscribeToMessageUpdates();
+    spectator.service.subscribeToMessageUpdates().subscribe();
     const lines = await firstValueFrom(spectator.service.lines$);
     expect(lines).toBe('[12:34] Line 1.\n[12:35] Line 2.\n[12:35] Line 3.\n[12:35] Line 4.');
   });
 
   it('lastThreeLogLines$ - returns last three lines joined with new line from state', async () => {
-    spectator.service.subscribeToMessageUpdates();
+    spectator.service.subscribeToMessageUpdates().subscribe();
     const lines = await firstValueFrom(spectator.service.lastThreeLogLines$);
     expect(lines).toBe('[12:35] Line 2.\n[12:35] Line 3.\n[12:35] Line 4.');
   });

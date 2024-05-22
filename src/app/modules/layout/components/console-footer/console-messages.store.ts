@@ -1,7 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ComponentStore } from '@ngrx/component-store';
-import { filter, map } from 'rxjs';
+import {
+  Observable, filter, map, tap,
+} from 'rxjs';
 import { WebSocketService } from 'app/services/ws.service';
 
 export interface ConsoleMessagesState {
@@ -37,15 +39,17 @@ export class ConsoleMessagesStore extends ComponentStore<ConsoleMessagesState> i
     super(initialConsoleMessagesState);
   }
 
-  subscribeToMessageUpdates(): void {
-    this.ws.subscribeToLogs(this.logPath)
+  /**
+   * Subscribe to initiate logs tracking and get logs updates.
+   * Subscribe to "lines$" to get recent logs put together
+   */
+  subscribeToMessageUpdates(): Observable<string> {
+    return this.ws.subscribeToLogs(this.logPath)
       .pipe(
         map((event) => event.fields),
         filter((log) => typeof log?.data === 'string'),
-        untilDestroyed(this),
-      )
-      .subscribe((log) => {
-        this.addMessage(log.data);
-      });
+        map((log) => log.data),
+        tap((message: string) => this.addMessage(message)),
+      );
   }
 }

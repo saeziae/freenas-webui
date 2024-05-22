@@ -24,7 +24,7 @@ export class ConsoleFooterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.messagesStore.subscribeToMessageUpdates();
+    this.messagesStore.subscribeToMessageUpdates().pipe(untilDestroyed(this)).subscribe();
     this.scrollToBottomOnNewMessages();
   }
 

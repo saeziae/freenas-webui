@@ -12,6 +12,7 @@ describe('ConsoleFooterComponent', () => {
     providers: [
       mockProvider(ConsoleMessagesStore, {
         lastThreeLogLines$: of("[12:35] I'm afraid I can't do that."),
+        subscribeToMessageUpdates: jest.fn(() => of("[12:35] I'm afraid I can't do that.")),
       }),
       mockProvider(MatDialog),
     ],
