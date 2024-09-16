@@ -1,5 +1,5 @@
-const fs = require('fs');
-const parse = require('messageformat-parser').parse;
+import fs from "fs";
+import {parse} from "messageformat-parser";
 
 const translationDir = "src/assets/i18n/";
 
@@ -21,14 +21,16 @@ fs.readdir(translationDir, function (err, files) {
     const messages = JSON.parse(fs.readFileSync(translationDir + file, { encoding: 'utf-8' }));
 
     // Validate line by line because it gives better error messages
+    let line = 2; // First line is opening bracket
     Object.entries(messages).forEach(([key, translation]) => {
       try {
         parse(key);
         parse(translation);
+        line++;
       } catch (error) {
         hadErrors = true;
-        console.error("Error parsing translation string. You may need to escape { } to '{' '}'. Offending string:");
-        console.error(`${language}: "${key}"`, JSON.stringify(error));
+
+        console.error(`${language}.json, line ${line}: ${error.message}`);
       }
     });
   });
