@@ -869,13 +869,13 @@ mat-list-item {
   ul {
     max-width: 100%;
     white-space: pre-wrap;
-    width: fill-available;
+    width: stretch;
     word-wrap: break-word;
   }
 
   span {
     flex-wrap: wrap;
-    max-width: fill-available;
+    max-width: stretch;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
