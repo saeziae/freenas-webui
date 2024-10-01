@@ -42,6 +42,7 @@ import { InterfacesStore } from 'app/pages/network/stores/interfaces.store';
 import { NetworkService } from 'app/services/network.service';
 import { NetworkComponent } from './network.component';
 import { routing } from './network.routing';
+import { PendingChangesComponent } from './components/pending-changes/pending-changes.component';
 
 @NgModule({
   imports: [
@@ -85,6 +86,7 @@ import { routing } from './network.routing';
     StaticRouteDeleteDialogComponent,
     StaticRouteFormComponent,
     StaticRoutesCardComponent,
+    PendingChangesComponent,
   ],
   providers: [
     NetworkService,

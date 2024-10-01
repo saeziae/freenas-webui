@@ -10,23 +10,7 @@ div.right-column div.left-column {
   height: inherit;
 }
 
-mat-card > mat-card-actions.interface-pending-actions,
-div.disabled-notice {
-  margin: 0;
-  padding: 0 16px 16px;
-}
-
-.pseudolink {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
 .dashboard-card {
   display: flex;
   flex: 1 1 0;
-}
-
-#timeout-field {
-  text-align: center;
-  width: 50px;
 }

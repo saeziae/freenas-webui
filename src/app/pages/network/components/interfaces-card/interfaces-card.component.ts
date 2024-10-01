@@ -41,7 +41,6 @@ import { networkInterfacesChanged } from 'app/store/network-interfaces/network-i
 })
 export class InterfacesCardComponent implements OnInit {
   @Input() isHaEnabled = false;
-  @Output() interfacesUpdated = new EventEmitter<void>();
 
   isLoading = false;
   dataProvider = new ArrayDataProvider<NetworkInterface>();
@@ -99,8 +98,7 @@ export class InterfacesCardComponent implements OnInit {
       .slideInClosed$
       .pipe(filter(Boolean), untilDestroyed(this))
       .subscribe(() => {
-        this.interfacesUpdated.emit();
-        this.interfacesStore$.loadInterfaces();
+        this.interfacesStore$.interfacesUpdated();
       });
   }
 
@@ -111,8 +109,7 @@ export class InterfacesCardComponent implements OnInit {
       .slideInClosed$
       .pipe(filter(Boolean), untilDestroyed(this))
       .subscribe(() => {
-        this.interfacesUpdated.emit();
-        this.interfacesStore$.loadInterfaces();
+        this.interfacesStore$.interfacesUpdated();
       });
   }
 
@@ -144,9 +141,7 @@ export class InterfacesCardComponent implements OnInit {
         untilDestroyed(this),
       )
       .subscribe(() => {
-        this.interfacesUpdated.emit();
-        this.interfacesStore$.loadInterfaces();
-        this.store$.dispatch(networkInterfacesChanged({ commit: false, checkIn: false }));
+        this.interfacesStore$.interfacesUpdated();
       });
   }
 

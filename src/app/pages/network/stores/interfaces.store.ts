@@ -5,6 +5,9 @@ import { NetworkInterface } from 'app/interfaces/network-interface.interface';
 import { DialogService } from 'app/services/dialog.service';
 import { ErrorHandlerService } from 'app/services/error-handler.service';
 import { WebSocketService } from 'app/services/ws.service';
+import { networkInterfacesChanged } from 'app/store/network-interfaces/network-interfaces.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/store';
 
 export interface InterfacesState {
   interfaces: NetworkInterface[];
@@ -22,6 +25,7 @@ export class InterfacesStore extends ComponentStore<InterfacesState> {
     private ws: WebSocketService,
     private dialogService: DialogService,
     private errorHandler: ErrorHandlerService,
+    private store$: Store<AppState>,
   ) {
     super(initialState);
   }
@@ -37,6 +41,15 @@ export class InterfacesStore extends ComponentStore<InterfacesState> {
             complete: () => this.patchState({ isLoading: false }),
           }),
         );
+      }),
+    );
+  });
+
+  readonly interfacesUpdated = this.effect((trigger$) => {
+    return trigger$.pipe(
+      tap(() => {
+        this.loadInterfaces();
+        this.store$.dispatch(networkInterfacesChanged());
       }),
     );
   });

@@ -1,0 +1,70 @@
+<mat-card *ngIf="hasPendingChanges$ | async">
+  <mat-card-content>
+    <div *ngIf="!checkinWaiting; else checkIn">
+      <p>{{ helptext.pending_changes_text | translate }}</p>
+      <p>
+        {{ helptext.checkin_text | translate }}
+        <mat-form-field class="timeout-field">
+          <input
+            matInput
+            ixTest="checkin-timeout"
+            [pattern]="checkinTimeoutPattern"
+            [(ngModel)]="checkinTimeout"
+          />
+        </mat-form-field>
+        {{ helptext.checkin_text_2 | translate }}
+      </p>
+    </div>
+
+    <ng-template #checkIn>
+      <div>
+        <p>
+          {{ helptext.pending_checkin_text | translate: { x: checkinRemaining } }}
+        </p>
+      </div>
+    </ng-template>
+  </mat-card-content>
+
+  <mat-card-actions class="interface-pending-actions">
+    <button
+      *ngIf="!checkinWaiting"
+      mat-button
+      ixTest="test-changes"
+      [disabled]="isHaEnabled"
+      (click)="testChanges()"
+    >
+      {{ helptext.commit_button | translate }}
+    </button>
+
+    <button
+      *ngIf="checkinWaiting"
+      mat-button
+      ixTest="save-changes"
+      [disabled]="isHaEnabled"
+      (click)="checkInNow()"
+    >
+      {{ helptext.keep_button | translate }}
+    </button>
+
+    <button
+      mat-button
+      ixTest="revert-changes"
+      [disabled]="isHaEnabled"
+      (click)="rollbackPendingChanges()"
+    >
+      {{ helptext.rollback_button | translate }}
+    </button>
+  </mat-card-actions>
+
+  <div *ngIf="isHaEnabled" class="disabled-notice">
+    {{ helptext.ha_enabled_text | translate }}
+    (
+    <a
+      ixTest="go-to-ha"
+      [routerLink]="['/system', 'failover']"
+    >
+      {{ helptext.go_to_ha | translate }}
+    </a>
+    ).
+  </div>
+</mat-card>
