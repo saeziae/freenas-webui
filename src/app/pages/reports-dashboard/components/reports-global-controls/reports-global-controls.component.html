@@ -99,7 +99,7 @@
       mat-button
       ixTest="netdata-nav"
       [ixUiSearch]="searchableElements.elements.netdata"
-      (click)="openNetdata()"
+      [routerLink]="['/reportsdashboard', 'netdata']"
     >{{ 'Netdata' | translate }}</button>
   </form>
 }

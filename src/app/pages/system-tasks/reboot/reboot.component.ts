@@ -49,7 +49,7 @@ export class RebootComponent implements OnInit {
     this.location.replaceState('/signin');
 
     this.matDialog.closeAll();
-    this.ws.job('system.reboot', { reason }).pipe(untilDestroyed(this)).subscribe({
+    this.ws.job('system.reboot', [reason, {}]).pipe(untilDestroyed(this)).subscribe({
       error: (error: unknown) => { // error on reboot
         this.dialogService.error(this.errorHandler.parseError(error))
           .pipe(untilDestroyed(this))

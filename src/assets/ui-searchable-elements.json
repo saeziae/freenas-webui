@@ -2316,7 +2316,10 @@
     "anchorRouterLink": [
       "/reportsdashboard"
     ],
-    "routerLink": null,
+    "routerLink": [
+      "/reportsdashboard",
+      "netdata"
+    ],
     "anchor": "netdata",
     "triggerAnchor": null,
     "section": "ui"
