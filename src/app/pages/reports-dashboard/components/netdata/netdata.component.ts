@@ -7,6 +7,7 @@ import {
   combineLatest, Observable, tap,
 } from 'rxjs';
 import { AppLoaderService } from 'app/modules/loader/app-loader.service';
+import { IxCpuChartComponent } from 'app/pages/reports-dashboard/components/cpu-chart/cpu-chart.component';
 import { SafePipe, ValueType } from 'app/pages/reports-dashboard/components/netdata/safe.pipe';
 import { ReportsService } from 'app/pages/reports-dashboard/reports.service';
 import { AuthService } from 'app/services/auth/auth.service';
@@ -21,6 +22,7 @@ import { WebSocketService } from 'app/services/ws.service';
   standalone: true,
   imports: [
     SafePipe,
+    IxCpuChartComponent,
   ],
 })
 export class NetdataComponent implements OnInit {
