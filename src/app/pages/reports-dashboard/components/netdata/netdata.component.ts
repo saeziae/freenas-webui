@@ -7,7 +7,7 @@ import {
   combineLatest, Observable, tap,
 } from 'rxjs';
 import { AppLoaderService } from 'app/modules/loader/app-loader.service';
-import { SafePipe } from 'app/pages/reports-dashboard/components/netdata/safe.pipe';
+import { SafePipe, ValueType } from 'app/pages/reports-dashboard/components/netdata/safe.pipe';
 import { ReportsService } from 'app/pages/reports-dashboard/reports.service';
 import { AuthService } from 'app/services/auth/auth.service';
 import { ErrorHandlerService } from 'app/services/error-handler.service';
@@ -25,6 +25,7 @@ import { WebSocketService } from 'app/services/ws.service';
 })
 export class NetdataComponent implements OnInit {
   url = signal('');
+  readonly ValueType = ValueType;
 
   constructor(
     private ws: WebSocketService,
@@ -35,31 +36,21 @@ export class NetdataComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.authService.user$.pipe(
-    //   filter(Boolean),
-    //   take(1),
-    //   switchMap((user) => {
-    //     const url = new URL(this.window.location.href);
-    //     url.username = user.pw_name;
-    //     url.password = password;
-    //     url.pathname = '/netdata/';
-
-    //     return this.http.get(url.toString(), { responseType: 'text' }).pipe(
-    //       tap(() => this.window.open(url.pathname)),
-    //     );
-    //   }),
-    //   this.errorHandler.catchError(),
-    // ).subscribe();
     combineLatest([
       this.generatePassword(),
       this.auth.user$,
     ]).pipe(
       tap(([password, userData]) => {
-        const url = new URL(`http://${environment.remote.toString()}`);
+        // console.log('username', userData.pw_name);
+        // console.log('password', password);
+        const urlStr = `http://${environment.remote}`;
+        // console.log('urlStr', urlStr);
+        const url = new URL(urlStr);
         url.username = userData.pw_name;
         url.password = password;
         url.pathname = '/netdata/';
-        this.url.set(url.toString());
+        // console.log('url', url.toString());
+        this.url.set(urlStr + '/netdata/');
       }),
       untilDestroyed(this),
     ).subscribe();

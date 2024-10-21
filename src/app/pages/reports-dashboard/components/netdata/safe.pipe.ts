@@ -4,7 +4,7 @@ import {
   DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl,
 } from '@angular/platform-browser';
 
-enum ValueType {
+export enum ValueType {
   Html = 'html',
   Style = 'style',
   Script = 'script',
