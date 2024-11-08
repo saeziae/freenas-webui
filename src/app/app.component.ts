@@ -30,7 +30,7 @@ import productText from './helptext/product';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  appTitle = 'TrueNAS';
+  appTitle = 'FweeNYAS';
   protected accountUserResource = 'account/users/1';
   protected user: any;
   product_type = '';
