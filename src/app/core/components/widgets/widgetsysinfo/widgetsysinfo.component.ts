@@ -178,6 +178,8 @@ export class WidgetSysInfoComponent extends WidgetComponent implements OnInit, O
     // PLATFORM INFO
     if (this.data.system_manufacturer && this.data.system_manufacturer.toLowerCase() == 'ixsystems') {
       this.manufacturer = 'ixsystems';
+    } else if (this.data.system_manufacturer && this.data.system_manufacturer.toLowerCase() == 'hpe') {
+      this.manufacturer = 'hpe';
     } else {
       this.manufacturer = 'other';
     }
@@ -228,7 +230,7 @@ export class WidgetSysInfoComponent extends WidgetComponent implements OnInit, O
   }
 
   setProductImage(data) {
-    if (this.manufacturer !== 'ixsystems') return;
+    if (this.manufacturer !== 'ixsystems' && this.manufacturer !== 'hpe') return;
 
     if (!this.isRackmount(data.system_product)) {
       this.setMiniImage(data.system_product);
@@ -311,6 +313,9 @@ export class WidgetSysInfoComponent extends WidgetComponent implements OnInit, O
       case 'TRUENAS-MINI-3.0-XL+':
         this.product_image = 'freenas_mini_xl_cropped.png';
         break;
+      case 'ProLiant MicroServer Gen10':
+        this.product_image = 'hpe-micro-gen10.png';
+        break;
       default:
         this.product_image = '';
         break;
@@ -335,6 +340,7 @@ export class WidgetSysInfoComponent extends WidgetComponent implements OnInit, O
       case 'FREENAS-MINI-XL':
       case 'FREENAS-MINI-3.0-XL+':
       case 'TRUENAS-MINI-3.0-XL+':
+      case 'ProLiant MicroServer Gen10':
         return false;
       default:
         return true;
